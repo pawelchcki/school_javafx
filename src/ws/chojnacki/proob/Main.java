@@ -13,9 +13,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ws.chojnacki.proob.models.Data;
-import ws.chojnacki.proob.models.Group;
-import ws.chojnacki.proob.models.Person;
 
 public class Main extends Application {
 

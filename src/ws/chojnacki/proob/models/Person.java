@@ -33,10 +33,10 @@ public class Person extends ProtoContact {
   }
 
   public String getLastName() {
-    return lastName;
+    return lastName.get();
   }
 
   public void setLastName(String lastName) {
-    this.lastName = lastName;
+    this.lastName.setValue(lastName);
   }
 }
