@@ -1,0 +1,12 @@
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.TableColumn?>
+<GridPane fx:controller="ws.chojnacki.proob.MainScreenController"
+          xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10">
+    <TableView id="john">
+        <rowFactory=
+        <columns>
+            <TableColumn/>
+        </columns>
+    </TableView>
+</GridPane>
