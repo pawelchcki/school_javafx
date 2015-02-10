@@ -1,12 +1,15 @@
 package ws.chojnacki.proob.md;
 
+import javax.persistence.Entity;
+import javax.xml.bind.annotation.XmlAttribute;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+@Entity
 public class Contact {
-
   private StringProperty firstName = new SimpleStringProperty();
   private StringProperty lastName = new SimpleStringProperty();
   private StringProperty telephone = new SimpleStringProperty();
@@ -53,6 +56,7 @@ public class Contact {
     return telephone;
   }
 
+  @XmlAttribute
   public boolean getWorkContact() {
     return workContact.get();
   }

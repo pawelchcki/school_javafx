@@ -1,6 +1,18 @@
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.layout.Region?>
 <GridPane fx:controller="ws.chojnacki.proob.MainScreenController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" fx:id="gridPane">
+
+    <TableView fx:id="tableView" GridPane.columnIndex="0"
+               GridPane.rowIndex="0" minWidth="950" editable="true">
+        <minHeight>600</minHeight>
+        <maxHeight>600</maxHeight>
+    </TableView>
+    <GridPane alignment="CENTER_LEFT" GridPane.rowIndex="2">
+        <Button text="Add" GridPane.columnIndex="0" onAction="#handleAddAction"/>
+        <Button text="Load" GridPane.columnIndex="1" onAction="#handleLoadAction"/>
+        <Button text="Save" GridPane.columnIndex="5" onAction="#handleSaveAction"/>
+    </GridPane>
 </GridPane>
