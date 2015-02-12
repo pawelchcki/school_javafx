@@ -19,7 +19,7 @@ public class Contact {
   private StringProperty city = new SimpleStringProperty();
   private StringProperty zipCode = new SimpleStringProperty();
 
-
+  @XmlAttribute
   public String getFirstName() {
     return firstName.get();
   }
@@ -32,6 +32,7 @@ public class Contact {
     return firstName;
   }
 
+  @XmlAttribute
   public String getLastName() {
     return lastName.get();
   }
@@ -44,6 +45,7 @@ public class Contact {
     return lastName;
   }
 
+  @XmlAttribute
   public String getTelephone() {
     return telephone.get();
   }
@@ -69,6 +71,7 @@ public class Contact {
     return workContact;
   }
 
+  @XmlAttribute
   public String getCompanyName() {
     return companyName.get();
   }
@@ -81,6 +84,7 @@ public class Contact {
     return companyName;
   }
 
+  @XmlAttribute
   public String getAddress() {
     return address.get();
   }
@@ -93,6 +97,7 @@ public class Contact {
     return address;
   }
 
+  @XmlAttribute
   public String getCity() {
     return city.get();
   }
@@ -105,6 +110,7 @@ public class Contact {
     return city;
   }
 
+  @XmlAttribute
   public String getZipCode() {
     return zipCode.get();
   }

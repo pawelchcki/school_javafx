@@ -3,10 +3,13 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.control.ListView?>
+<?import com.sun.javafx.scene.control.skin.InputField?>
+<?import javafx.scene.control.TextField?>
 <GridPane fx:controller="ws.chojnacki.proob.MainScreenController"
           xmlns:fx="http://javafx.com/fxml" alignment="center" hgap="10" vgap="10" fx:id="gridPane">
+    <TextField fx:id="textField" GridPane.rowIndex="0" promptText="Filter contacts" />
     <TableView fx:id="tableView" GridPane.columnIndex="0"
-               GridPane.rowIndex="0" minWidth="950" editable="true">
+               GridPane.rowIndex="1" minWidth="950" editable="true">
         <minHeight>600</minHeight>
         <maxHeight>600</maxHeight>
     </TableView>
@@ -16,7 +19,7 @@
         <Button text="Save" GridPane.columnIndex="5" onAction="#handleSaveAction"/>
     </GridPane>
 
-    <TableView fx:id="groupTableView" GridPane.columnIndex="1" minWidth="150" editable="true" >
+    <TableView fx:id="groupTableView" GridPane.rowIndex="1" GridPane.columnIndex="1" minWidth="150" editable="true" >
         <minHeight>600</minHeight>
         <maxHeight>600</maxHeight>
     </TableView>

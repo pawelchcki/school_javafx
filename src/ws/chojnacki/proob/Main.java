@@ -29,27 +29,7 @@ public class Main extends Application {
     primaryStage.show();
   }
 
-
-
   public static void main(String[] args) throws JAXBException {
-//    Person p = new Person("Stefan", "Batory");
-//    Data c = new Data();
-//    Group g = new Group("name1");
-//    Group g2 = new Group("name2");
-//    c.getContacts().add(g2);
-//
-//    c.getContacts().add(g);
-//    c.getContacts().add(p);
-//    JAXBContext jc = JAXBContext.newInstance(Data.class, Group.class, Person.class);
-//    Marshaller m = jc.createMarshaller();
-//    StringWriter w = new StringWriter();
-//    m.marshal(c, w);
-//    String xxx = w.toString();
-//
-//    StringReader stringReader = new StringReader(xxx);
-//    Unmarshaller unmarchaller = jc.createUnmarshaller();
-//    Data data2 = (Data) unmarchaller.unmarshal(stringReader);
-//    System.err.println(data2.getContacts());
     launch(args);
   }
 }
