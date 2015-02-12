@@ -101,6 +101,11 @@ public class MainScreenController implements Initializable {
     groupTableView.setItems(group.getGroups());
   }
 
+  /**
+   * Builds a Regexp pattern from naive search string P* p? etc
+   * @param str
+   * @return
+   */
   public Pattern textToRegexp(String str) {
     return Pattern.compile(
         "^"
@@ -135,7 +140,7 @@ public class MainScreenController implements Initializable {
         if (newValue == null || newValue.isEmpty()) {
           return true;
         }
-
+        // List all properties to search through them
         List<String> list = new LinkedList<>();
         list.add(contact.getAddress());
         list.add(contact.getFirstName());

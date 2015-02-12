@@ -1,0 +1,9 @@
+apply plugin: "java"
+apply plugin: "application"
+
+mainClassName = "ws.Chojnacki.proob.Main"
+
+dependencies {
+    compile 'com.google.guava:guava:18.0'
+    compile 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.5.2'
+}
