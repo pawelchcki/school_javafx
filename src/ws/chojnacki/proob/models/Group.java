@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 public class Group extends ProtoContact implements Serializable {
 
   private String name;
+  private String description;
   private List<ProtoContact> contacts;
 
   public Group() {

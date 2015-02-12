@@ -9,13 +9,17 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 @Entity
 @XmlRootElement
 public class Group {
   private StringProperty name = new SimpleStringProperty();
-  private List<Contact> contacts;
-  private List<Group> groups;
+  private StringProperty description = new SimpleStringProperty();
+
+  private ObservableList<Contact> contacts = FXCollections.observableArrayList();
+  private ObservableList<Group> groups = FXCollections.observableArrayList();
 
   public Group() {
   }
@@ -34,20 +38,32 @@ public class Group {
   }
 
   @XmlElement(name="contact")
-  public List<Contact> getContacts() {
+  public ObservableList<Contact> getContacts() {
     return contacts;
   }
 
-  public void setContacts(List<Contact> contacts) {
+  public void setContacts(ObservableList<Contact> contacts) {
     this.contacts = contacts;
   }
 
   @XmlElement(name="group")
-  public List<Group> getGroups() {
+  public ObservableList<Group> getGroups() {
     return groups;
   }
 
-  public void setGroups(List<Group> groups) {
+  public void setGroups(ObservableList<Group> groups) {
     this.groups = groups;
+  }
+
+  public String getDescription() {
+    return description.get();
+  }
+
+  public StringProperty descriptionProperty() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description.set(description);
   }
 }

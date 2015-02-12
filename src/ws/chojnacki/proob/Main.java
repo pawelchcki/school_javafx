@@ -20,11 +20,11 @@ public class Main extends Application {
   public void start(Stage primaryStage) throws Exception {
     Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
     primaryStage.setTitle("Contact app");
-    root.minWidth(1000);
-    root.maxWidth(1000);
+    root.minWidth(1300);
+    root.maxWidth(1300);
     root.minHeight(700);
     root.minWidth(700);
-    Scene scene = new Scene(root, 1000, 700);
+    Scene scene = new Scene(root, 1300, 700);
     primaryStage.setScene(scene);
     primaryStage.show();
   }
