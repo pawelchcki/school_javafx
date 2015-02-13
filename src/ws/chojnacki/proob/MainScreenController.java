@@ -1,10 +1,15 @@
 package ws.chojnacki.proob;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -103,8 +108,6 @@ public class MainScreenController implements Initializable {
 
   /**
    * Builds a Regexp pattern from naive search string P* p? etc
-   * @param str
-   * @return
    */
   public Pattern textToRegexp(String str) {
     return Pattern.compile(
@@ -164,8 +167,8 @@ public class MainScreenController implements Initializable {
       handleLoadAction(null);
     } else {
       mainGroup = new Group();
+      updateCurrentGroup(mainGroup);
     }
-    updateCurrentGroup(mainGroup);
   }
 
   private String getConfigurationFilePath() {
@@ -176,40 +179,62 @@ public class MainScreenController implements Initializable {
   @FXML
   private void handleLoadAction(ActionEvent event) {
     System.err.println("Load");
-    try {
-      JAXBContext jc = JAXBContext.newInstance(Group.class, Contact.class);
-      Unmarshaller m = jc.createUnmarshaller();
-      InputStream is = new FileInputStream(getConfigurationFilePath());
-      this.mainGroup = (Group) m.unmarshal(is);
-      updateCurrentGroup(this.mainGroup);
-      is.close();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+    Firebase firebase = new Firebase("https://resplendent-torch-6100.firebaseio.com/storage");
+    firebase.auth(
+        "8Vjf6sM5WlStcPyL9Bbu7aDvNqem08fuAxttRCFh",
+        new AuthResultWrapper().onSuccess((obj) -> {
+          System.err.println("Loading");
+          firebase.addValueEventListener(new ValueWrapper().onValue((data) -> {
+            try {
+              JAXBContext jc = JAXBContext.newInstance(Group.class, Contact.class);
+              Unmarshaller m = jc.createUnmarshaller();
+              StringReader sr = new StringReader((String) data.getValue());
+//              InputStream is = new FileInputStream(getConfigurationFilePath());
+              this.mainGroup = (Group) m.unmarshal(sr);
+              updateCurrentGroup(this.mainGroup);
+//              is.close();
+            } catch (Exception e) {
+              throw new RuntimeException(e);
+            }
+          }));
+        }));
   }
 
   @FXML
   private void handleSaveAction(ActionEvent event) {
     System.err.println("Save");
-    try {
-      JAXBContext jc = JAXBContext.newInstance(Group.class, Contact.class);
-      Marshaller m = jc.createMarshaller();
-      OutputStream os = new FileOutputStream(getConfigurationFilePath());
-      m.marshal(this.mainGroup, os);
-      os.close();
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+
+    Firebase firebase = new Firebase("https://resplendent-torch-6100.firebaseio.com/storage");
+    firebase.auth(
+        "8Vjf6sM5WlStcPyL9Bbu7aDvNqem08fuAxttRCFh",
+        new AuthResultWrapper().onSuccess((obj) -> {
+          try {
+            JAXBContext jc = JAXBContext.newInstance(Group.class, Contact.class);
+            Marshaller m = jc.createMarshaller();
+            StringWriter sw = new StringWriter();
+            //OutputStream os = new FileOutputStream(getConfigurationFilePath());
+            //m.marshal(this.mainGroup, os);
+            m.marshal(this.mainGroup, sw);
+            //os.close();
+            firebase.setValue(sw.toString());
+            firebase.push();
+          } catch (Exception e) {
+            throw new RuntimeException(e);
+          }
+        }));
   }
+
 
   public void handleAddAction(ActionEvent actionEvent) {
     currentGroup.getContacts().add(new Contact());
     updateCurrentGroup(currentGroup);
   }
 
+
   public void handleAddGroupAction(ActionEvent actionEvent) {
     currentGroup.getGroups().add(new Group());
   }
+
 
   public void handleRootGroup(ActionEvent actionEvent) {
     updateCurrentGroup(mainGroup);
@@ -218,5 +243,57 @@ public class MainScreenController implements Initializable {
   private interface SetStuff<T> {
 
     public void apply(T contact, String value);
+  }
+
+  private interface Callback<T> {
+
+    public void apply(T value);
+  }
+
+  class ValueWrapper implements ValueEventListener {
+
+    private Callback<DataSnapshot> cb;
+
+    public ValueWrapper onValue(Callback<DataSnapshot> cb) {
+      this.cb = cb;
+      return this;
+    }
+
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+      this.cb.apply(dataSnapshot);
+    }
+
+    @Override
+    public void onCancelled(FirebaseError firebaseError) {
+      throw new RuntimeException(firebaseError.toException());
+    }
+  }
+
+  class AuthResultWrapper implements Firebase.AuthListener {
+
+    private Callback<Object> successCallback;
+
+    public AuthResultWrapper onSuccess(Callback<Object> onSuccess) {
+      this.successCallback = onSuccess;
+      return this;
+    }
+
+    @Override
+    public void onAuthError(FirebaseError firebaseError) {
+      throw new RuntimeException(firebaseError.toException());
+    }
+
+    @Override
+    public void onAuthSuccess(Object o) {
+      this.successCallback.apply(o);
+    }
+
+    @Override
+    public void onAuthRevoked(FirebaseError firebaseError) {
+      throw new RuntimeException(firebaseError.toException());
+    }
+
+
   }
 }
